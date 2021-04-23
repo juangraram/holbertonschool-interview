@@ -10,6 +10,6 @@ def canUnlockAll(boxes):
             if keyBoxes not in listBoxUnlocked:
                 if keyBoxes < len(boxes):
                     listBoxUnlocked.append(keyBoxes)
-                if len(listBoxUnlocked) == len(boxes):
-                    return True
+    if len(listBoxUnlocked) == len(boxes):
+        return True
     return False
