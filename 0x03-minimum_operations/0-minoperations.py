@@ -10,17 +10,17 @@ def minOperations(n):
         Returns an integer
     """
 
+    number = n
     module = 2
-    numOpperations = 0
-
+    qoperation = 0
 
     if n <= 1:
         return 0
 
-    while n > 1:
-        if n % module == 0:
-            n = n / module
-            numOpperations = numOpperations + module
+    while number > 1:
+        if number % module == 0:
+            number = number / module
+            qoperation = qoperation + module
         else:
             module += 1
-    return numOpperations
+    return qoperation
