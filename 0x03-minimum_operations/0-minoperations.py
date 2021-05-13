@@ -12,17 +12,16 @@ def minOperations(n):
         int:  number of operations needed to result in exactly
     """
 
-    inp = n
-    numOpperations = 0
+    quaOpperations = 0
     module = 2
 
     if n <= 1:
         return 0
 
-    while inp > 1:
-        if inp % module == 0:
-            inp = inp / module
-            numOpperations = numOpperations + module
+    while n > 1:
+        if n % module == 0:
+            n = n / module
+            quaOpperations = quaOpperations + module
         else:
             module += 1
-    return numOpperations
+    return quaOpperations
