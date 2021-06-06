@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
-
 import sys
-
+import signal
 
 
 def log_parsing(function_size, status_code):
