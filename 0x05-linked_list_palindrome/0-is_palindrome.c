@@ -1,41 +1,96 @@
 #include "lists.h"
 
 /**
- * reverse - recursive function
- * @first: pointer to head of list
- * @second: pointer to the list
+ * is_palindrome - check whether a liked list is palindrome or not.
+ * @head: head of the linked list
  *
- * Return: temp
+ * Return: 1 on success, otherwise 0.
  */
-
-int reverse(listint_t **first, listint_t *second)
+int is_palindrome(listint_t **head)
 {
-	int temp;
+	int *array1, *reversed_array;
+	listint_t *temp;
+	int iter;
+	size_t flag;
 
-	if (second == NULL)
-		return (1);
+	temp = *head;
+	array1 = malloc(sizeof(int) * list_len(temp));
+	reversed_array = malloc(sizeof(int) * list_len(temp));
+	if (!array1 || !reversed_array)
+		return (0);
+	iter = 0;
+	temp = *head;
+	while (temp)
+	{
+		array1[iter] = temp->n;
+		reversed_array[iter] = temp->n;
+		temp = temp->next;
+		iter++;
+	}
+	reverse_array(reversed_array, iter);
+	flag = check_array_palindrome(array1, reversed_array, iter);
+	free(array1);
+	free(reversed_array);
+	return (flag);
+}
 
-	temp = reverse(first, second->next);
-	if (temp == 0)
+
+/**
+ * list_len - print amount of nodes
+ * @h: structure liked list
+ *
+ * Description: singly linked list node structure
+ * for Holberton project
+ *
+ * Return: amount nodes
+ */
+size_t list_len(const listint_t *h)
+{
+	if (h == NULL)
 		return (0);
 
-	temp = (second->n == (*first)->n);
-	*first = (*first)->next;
-
-	return (temp);
+	return (1 + list_len(h->next));
 }
 
 /**
- * is_palindrome - checks if a singly linked list is a palindrome
- * @head: pointer to head of list
+ * reverse_array - reverse an array
+ * @a: Argument pointer to int
+ * @n: length of array
  *
- * Return: 0 if it is not a palindrome, 1 if it is a palindrome
+ * Return: Nothing
  */
-
-int is_palindrome(listint_t **head)
+void reverse_array(int *a, int n)
 {
+	int j, z;
 
-	if (head == NULL)
-		return (0);
-	return (reverse(head, *head));
+	n--;
+	j = 0;
+	while (j < n)
+	{
+		z = a[n];
+		a[n] = a[j];
+		a[j] = z;
+		n--;
+		j++;
+	}
+}
+
+/**
+ * check_array_palindrome - check if array and reversed array are equals.
+ * @array1: normal array
+ * @array2: reversed array
+ * @len_array: lenght of the array
+ *
+ * Return: 1 on success, otherwise 0
+ */
+size_t check_array_palindrome(int *array1, int *array2, int len_array)
+{
+	int i;
+
+	for (i = 0; i < len_array; i++)
+	{
+		if (array1[i] != array2[i])
+			return (0);
+	}
+	return (1);
 }
