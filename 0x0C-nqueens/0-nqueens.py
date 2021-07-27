@@ -1,57 +1,41 @@
 #!/usr/bin/python3
-'''
-Module that solves the N Queens
-puzzle on an N×N chessboard
-'''
-from sys import argv, exit
+""" Task 0. N queens"""
+import sys
+
+
+def res_nq(num, val_r, list_sol):
+    if (val_r == num):
+        print(list_sol)
+    else:
+        for val_c in range(num):
+            pos = [val_r, val_c]
+            chk = check_pos(pos, list_sol)
+            if chk:
+                list_sol.append(pos)
+                res_nq(num, val_r + 1, list_sol)
+                list_sol.remove(pos)
+
+
+def check_pos(pos, list_sol):
+    for ele in list_sol:
+        con1 = ele[1] == pos[1]
+        con2 = (ele[0] + ele[1] == pos[0] + pos[1])
+        con3 = (ele[0] - ele[1] == pos[0] - pos[1])
+        if con1 or con2 or con3:
+            return False
+    return True
 
 if __name__ == "__main__":
-    if len(argv) != 2:
-        print('Usage: nqueens N')
-        exit(1)
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        sys.exit(1)
     try:
-        n = int(argv[1])
-    except BaseException:
-        print('N must be a number')
+        num = int(sys.argv[1])
+    except:
+        print("N must be a number\n")
         exit(1)
-    if n < 4:
-        print('N must be at least 4')
+    if num < 4:
+        print("N must be at least 4\n")
         exit(1)
-
-    solution = []
-
-    def solve_queens(row, n, solution):
-        """Quenns placement in NxN chessboard
-        Args:
-            row (int): number of current row
-            n (int): number of rows
-            solution (array): Solution od N queens
-        """
-        if (row == n):
-            print(solution)
-        else:
-            for col in range(n):
-                placement = [row, col]
-                if valid_place(solution, placement):
-                    solution.append(placement)
-                    solve_queens(row + 1, n, solution)
-                    solution.remove(placement)
-
-    def valid_place(solution, placement):
-        """Valid Place of the current piece
-        Args:
-            solution (array): Solution od N queens
-            placement (array): Current piece placement
-        Returns:
-            [Bool]
-        """
-        for queen in solution:
-            if queen[1] == placement[1]:
-                return False
-            if (queen[0] + queen[1]) == (placement[0] + placement[1]):
-                return False
-            if (queen[0] - queen[1]) == (placement[0] - placement[1]):
-                return False
-        return True
-
-    solve_queens(0, n, solution)
+    list_sol = []
+    res_nq(num, 0, list_sol)
